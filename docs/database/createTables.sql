@@ -38,7 +38,7 @@ create table if not exists Album(
 
 create table if not exists Artist(
 	name varchar(64) primary key,
-    description varchar(256),
+    description varchar(512),
     imagePath varchar(256)
 );
 
@@ -78,7 +78,7 @@ create table if not exists SocialMedia(
 
 create table if not exists Interpreter(
 	song int,
-    interpreter int,
+    interpreter varchar(64),
     connect enum('&', 'Ft.'),
     primary key(song, interpreter)
 );
