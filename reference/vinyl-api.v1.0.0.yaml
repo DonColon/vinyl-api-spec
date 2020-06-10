@@ -13,11 +13,1934 @@ info:
 servers:
   - url: 'http://localhost:3000'
     description: Development
-paths: {}
+tags:
+  - name: Users
+    description: Operations for Users
+  - name: Albums
+    description: Operations for Albums
+  - name: Artists
+    description: Operations for Artists
+  - name: Tracks
+    description: Operations for Tracks
+  - name: Playlists
+    description: Operations for Playlists
+paths:
+  /users:
+    post:
+      summary: Create a User
+      tags:
+        - Users
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-users
+      description: Creates a user on the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: A Json Object with the mandatory fields for a user
+  '/users/{userID}':
+    parameters:
+      - schema:
+          type: integer
+          minimum: 1
+          format: int32
+          maximum: 4294967295
+        name: userID
+        in: path
+        required: true
+        description: ''
+    get:
+      summary: "Retrieve a User's Information"
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-users-userID
+      description: Returns the general information of a user
+      parameters: []
+    put:
+      summary: "Update a User's Information"
+      tags:
+        - Users
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-users-userID
+      description: Updates the general information of a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: A Json Object with the mandatory fields for a user
+    delete:
+      summary: Delete a User
+      tags:
+        - Users
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-users-userID
+      description: Deletes a user from the system
+  /albums:
+    get:
+      summary: 'Retrieve all Albums '
+      tags:
+        - Albums
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Album'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-albums
+      description: Returns all albums on the system
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/albums/{albumID}':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+        name: albumID
+        in: path
+        required: true
+    get:
+      summary: "Retrieve an Album's Information"
+      tags:
+        - Albums
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Album'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-albums-albumID
+      description: Returns the general information of an album
+  '/artists/{artistID}/albums':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 5757
+        name: artistID
+        in: path
+        required: true
+    get:
+      summary: Retrieve all Albums of an Artist
+      tags:
+        - Albums
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Album'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-artists-artistID-albums
+      description: Returns all albums of an artist
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  /artists:
+    get:
+      summary: Retrieve all Artists
+      tags:
+        - Artists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-artists
+      description: Returns all artists on the system
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/artists/{artistID}':
+    parameters:
+      - schema:
+          type: string
+        name: artistID
+        in: path
+        required: true
+    get:
+      summary: "Retrieve an Artist's Information"
+      tags:
+        - Artists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-artists-artistID
+      description: Returns the general information of an artist
+  '/users/{userID}/playlists':
+    parameters:
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 4294967295
+          format: int32
+          example: 4711
+        name: userID
+        in: path
+        required: true
+    get:
+      summary: Retrieve all Playlists of a User
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-users-userID-playlists
+      description: Returns all playlists that a user owns
+    post:
+      summary: Create a Playlist
+      tags:
+        - Playlists
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-users-userID-playlists
+      description: Creates a playlist on the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Playlist'
+        description: A Json Object with the mandatory fields for a user
+    delete:
+      summary: Delete a Playlist
+      tags:
+        - Playlists
+      operationId: delete-users-userID-playlists
+      description: Deletes one or multiple playlists from the system
+      parameters:
+        - $ref: '#/components/parameters/indices'
+      responses:
+        '204':
+          description: No Content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Indices'
+        description: ''
+  /playlists:
+    get:
+      summary: Retrieve all public Playlists
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-playlists
+      description: Returns all playlists on the system that are marked as public
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/playlists/{playlistID}':
+    parameters:
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 4294967295
+          format: int32
+        name: playlistID
+        in: path
+        required: true
+    get:
+      summary: "Retrieve a Playlist's Information"
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-playlists-playlistID
+      description: Returns the general information of a playlist
+    put:
+      summary: "Update a Playlist's Information"
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-playlists-playlistID
+      description: Updates the general information of a playlist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Playlist'
+        description: A Json Object with the mandatory fields for a playlist
+  '/playlists/{playlistID}/tracks':
+    parameters:
+      - schema:
+          type: integer
+          minimum: 1
+          maximum: 4294967295
+          format: int32
+        name: playlistID
+        in: path
+        required: true
+        description: ''
+    put:
+      summary: Reorder Playlist Items in a Playlist
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-playlists-playlistID-tracks
+      description: Reorder one or multiple playlist items in a playlist
+      parameters:
+        - $ref: '#/components/parameters/from'
+        - $ref: '#/components/parameters/to'
+        - $ref: '#/components/parameters/range'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from:
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  maximum: 255
+                  example: 5
+                to:
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  maximum: 255
+                  example: 8
+                range:
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  maximum: 60
+                  example: 5
+        description: ''
+    delete:
+      summary: Delete a Playlist Item from a Playlist
+      tags:
+        - Playlists
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-playlists-playlistID-tracks
+      description: Deletes one or multiple tracks from a playlist on the system
+      parameters:
+        - $ref: '#/components/parameters/indices'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Indices'
+        description: ''
+    post:
+      summary: Add a Playlist Item to a Playlist
+      tags:
+        - Playlists
+      operationId: post-playlists-playlistID-tracks
+      description: Adds one or multiple tracks to a playlist on the system
+      parameters:
+        - $ref: '#/components/parameters/indices'
+        - $ref: '#/components/parameters/to'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                indices:
+                  $ref: '#/components/schemas/Indices'
+                to:
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  maximum: 255
+                  example: 8
+        description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/subscribers/{userID}/playlists':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 4711
+        name: userID
+        in: path
+        required: true
+    get:
+      summary: Retrieve all Playlists a User follows
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-subscribers-userID-playlists
+      description: Returns all playlists that a user follows
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/playlists/{playlistID}/images':
+    parameters:
+      - schema:
+          type: integer
+          maximum: 4294967295
+          minimum: 1
+          format: int32
+        name: playlistID
+        in: path
+        required: true
+    get:
+      summary: Retrieve a Playlist Cover Image
+      tags:
+        - Playlists
+      operationId: get-playlists-playlistID-images
+      description: Returns the meta information about the image
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Upload a Playlist Cover Image
+      tags:
+        - Playlists
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-playlists-playlistID-images
+      description: Updates the playlist cover image on the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: 'The content type of the request body: image/jpeg, image/png'
+          required: true
+  '/playlists/{playlistID}/subscribers':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 1337
+        name: playlistID
+        in: path
+        required: true
+    put:
+      summary: Subscribe a Playlist
+      tags:
+        - Playlists
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-playlists-playlistID-subscribers
+      description: Subscribe the current user to a playlist
+    delete:
+      summary: Unsubscribe a Playlist
+      tags:
+        - Playlists
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-playlists-playlistID-subscribers
+      description: Unsubscribe the current user from a playlist
+  '/tracks/{trackID}':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 1442
+        name: trackID
+        in: path
+        required: true
+    get:
+      summary: Retrieve a Track
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-tracks-trackID
+      description: Returns the general information of a track
+  /tracks:
+    get:
+      summary: Retrieve all Tracks
+      tags:
+        - Tracks
+      operationId: get-tracks
+      description: Returns all tracks on the system
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+    post:
+      summary: Create a Track
+      tags:
+        - Tracks
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: The url to the endpoint to upload the audio file for the track
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Track'
+      operationId: post-tracks
+      description: Creates a track on the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                artist:
+                  type: string
+        description: A json object with the title and artist of the track
+  '/tracks/{trackID}/audios':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 1442
+        name: trackID
+        in: path
+        required: true
+    put:
+      summary: Upload a mp3 file for a Track
+      tags:
+        - Tracks
+      operationId: put-tracks-trackID-audios
+      description: Upload a mp3 file for a track
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: 'The content type of the request body: audio/mpeg'
+          name: Content-Type
+          required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/tracks/{trackID}/favorites':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 1442
+        name: trackID
+        in: path
+        required: true
+    delete:
+      summary: Disfavor a Track
+      tags:
+        - Tracks
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-tracks-trackID-favorites
+      description: Unmark a track as a favorite of the current user
+    put:
+      summary: Favor a Track
+      tags:
+        - Tracks
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-tracks-trackID-favorites
+      description: Mark a track as a favorite of the current user
+  '/artists/{artistID}/tracks':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 5757
+        name: artistID
+        in: path
+        required: true
+    get:
+      summary: Retrieve all Tracks of an Artist
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-artists-artistID-tracks
+      description: Returns all tracks of an artist
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/albums/{albumID}/tracks':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 5757
+        name: albumID
+        in: path
+        required: true
+    get:
+      summary: Retrieve all Tracks of an Album
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-albums-albumID-tracks
+      description: Returns all tracks of an album
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/genres/{description}/tracks':
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          maxLength: 32
+          example: Rock
+        name: description
+        in: path
+        required: true
+    get:
+      summary: Retrieve all Tracks of a Genre
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-genres-description-tracks
+      description: Returns all tracks of a genre
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  '/users/{userID}/favorites':
+    parameters:
+      - schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 4711
+        name: userID
+        in: path
+        required: true
+    get:
+      summary: Retrieve all favorite Tracks of a User
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-users-userID-favorites
+      description: Returns all favorite tracks of a user
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  /search/users:
+    post:
+      summary: Search for a User
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-search-users
+      description: Returns a user that matches the search string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                searchText:
+                  type: string
+        description: A json object with the search text
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  /search/albums:
+    post:
+      summary: Search for an Album
+      tags:
+        - Albums
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Album'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-search-albums
+      description: Returns an album that matches the search string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                searchText:
+                  type: string
+        description: A json object with the search text
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+  /search/artists:
+    post:
+      summary: Search for an Artist
+      tags:
+        - Artists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Artist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-search-artists
+      description: Returns an artist that matches the search string
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                searchText:
+                  type: string
+        description: A json object with the search text
+  /search/tracks:
+    post:
+      summary: Search for a Track
+      tags:
+        - Tracks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-search-tracks
+      description: Returns a track that matches the search string
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                searchText:
+                  type: string
+        description: A json object with the search text
+  /search/playlists:
+    post:
+      summary: Search for a Playlist
+      tags:
+        - Playlists
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Playlist'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: post-search-playlists
+      description: Returns a playlist that matches the search string
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sortBy'
+        - $ref: '#/components/parameters/sortOrder'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                searchText:
+                  type: string
+        description: A json object with the search text
 components:
+  parameters:
+    page:
+      schema:
+        type: integer
+        minimum: 1
+        format: int32
+        default: 1
+        example: 8
+      in: query
+      name: page
+      description: The number of the page to select. The default value is 1.
+    pageSize:
+      schema:
+        type: integer
+        format: int32
+        default: 12
+        example: 36
+        minimum: 12
+        maximum: 60
+      in: query
+      name: pageSize
+      description: The number of items on the page. The default value is 12. The maximum amount for a page is 60.
+    sortBy:
+      schema:
+        type: string
+        minLength: 1
+        example: title
+      in: query
+      name: sortBy
+      description: The name of the property to sort the items with. By default the ID of the entity is used for sorting.
+    sortOrder:
+      schema:
+        type: string
+        default: asc
+        enum:
+          - asc
+          - desc
+        example: desc
+        minLength: 3
+        maxLength: 4
+      in: query
+      name: sortOrder
+      description: The direction to sort the items.
+    indices:
+      schema:
+        type: string
+        minLength: 1
+        example: '4711,1337'
+      in: query
+      name: indices
+      description: A comma separated list with indices. You can use this parameter to perform an operation for multiple entries.
+    from:
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 255
+        example: 5
+      in: query
+      name: from
+      description: The index of the item that you want to move
+    to:
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 255
+        example: 8
+      in: query
+      name: to
+      description: The index to insert the items
+    range:
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 60
+        default: 1
+        example: 5
+      in: query
+      name: range
+      description: The number of items to operate with
   schemas:
     User:
       title: User
       type: object
-      description: ''
+      description: The general information about a single user on the system
+      x-examples:
+        DonColon:
+          userID: 1
+          firstname: Dardan
+          familyname: Rrafshi
+          gender: M
+          birthday: '1997-01-30'
+          username: DonColon
+          email: dardan.rrafshi@gmail.com
+          password: '1234'
+          entryDate: '2020-05-30'
+      properties:
+        userID:
+          type: integer
+          format: int32
+          example: 4711
+          exclusiveMinimum: false
+          maximum: 4294967295
+          exclusiveMaximum: false
+          description: The ID of a user
+          minimum: 1
+          readOnly: true
+        firstname:
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: Dardan
+          description: The first name of a user
+        familyname:
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: Rrafshi
+          description: The family name of a user
+        gender:
+          type: string
+          example: M
+          enum:
+            - D
+            - M
+            - W
+          description: The gender of a user
+          writeOnly: true
+        birthday:
+          type: string
+          format: date
+          example: '1997-01-30'
+          minLength: 10
+          maxLength: 10
+          description: The birthday of a user
+          pattern: "\\d{4}-\\d{2}-\\d{2}"
+          writeOnly: true
+        username:
+          type: string
+          example: DonColon
+          minLength: 1
+          maxLength: 64
+          description: The user name of a user
+        email:
+          type: string
+          format: email
+          example: dardan.rrafshi@gmail.com
+          maxLength: 64
+          minLength: 0
+          description: The email of a user
+          pattern: "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$"
+          writeOnly: true
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 1024
+          example: GikgdG;sdFiE1
+          description: The specified password of a user
+          pattern: "(?=(.*[0-9]))(?=.*[\\!@#$%^&*()\\\\[\\]{}\\-_+=~`|:;\"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}"
+          writeOnly: true
+        entryDate:
+          type: string
+          format: date
+          example: '2020-05-30'
+          minLength: 10
+          maxLength: 10
+          description: The date the user signed up
+          pattern: "\\d{4}-\\d{2}-\\d{2}"
+          writeOnly: true
+    Playlist:
+      title: Playlist
+      type: object
+      description: The general information about a playlist of a user
+      properties:
+        playlistID:
+          type: integer
+          example: 1337
+          minimum: 1
+          maximum: 4294967295
+          format: int32
+          description: The ID of a playlist
+          readOnly: true
+        title:
+          type: string
+          minLength: 1
+          maxLength: 128
+          example: Winter Wonder
+          description: The title of a playlist
+        description:
+          type: string
+          example: Chill in Front your Chimney
+          minLength: 1
+          maxLength: 256
+          description: The description of a playlist
+        imagePath:
+          type: string
+          example: /images/winter-wonder.png
+          minLength: 1
+          maxLength: 256
+          description: The path to the image of the playlist on the file server
+          readOnly: true
+        owner:
+          oneOf:
+            - $ref: '#/components/schemas/User'
+          readOnly: true
+        public:
+          type: boolean
+          default: false
+          description: 'If the playlist is public, it can be viewed by other users. Otherwise only the owner can listen to the playlist.'
+          example: true
+        creationDate:
+          type: string
+          format: date
+          minLength: 10
+          maxLength: 10
+          example: '2020-05-30'
+          description: The date when the plalist was created
+          pattern: "\\d{4}-\\d{2}-\\d{2}"
+          readOnly: true
+        playlistItems:
+          type: array
+          uniqueItems: true
+          description: The list of playlist items
+          items:
+            $ref: '#/components/schemas/PlaylistItem'
+          readOnly: true
+      x-examples:
+        Winter Wonder:
+          playlistID: 1
+          title: Winter Wonder
+          description: Chill in Front your Chimney
+          imagePath: /images/winter-wonder.png
+          owner:
+            userID: 1
+            firstname: Dardan
+            familyname: Rrafshi
+            gender: M
+            birthday: '1997-01-30'
+            username: DonColon
+            email: dardan.rrafshi@gmail.com
+            password: '1234'
+            entryDate: '2020-05-30'
+          public: true
+          creationDate: '2020-05-31'
+          playlistItems:
+            - track:
+                trackID: 1
+                title: Something Just Like This
+                duration: '4:08'
+                filePath: /music/something-just-like-this.mp3
+                albums:
+                  - album:
+                      albumID: 1
+                      title: Something Just Like This
+                      year: '2017'
+                      type: single
+                      imagePath: /images/something-just-like-this.png
+                    track: 1
+                artists:
+                  - name: The Chainsmokers
+                    description: 'The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit "#SELFIE".'
+                    imagePath: /images/the-chainsmokers.png
+                    aliases:
+                      - Chain Smokers
+                    urls:
+                      - 'http://www.thechainsmokers.com'
+                    members:
+                      - name: Andrew Taggart
+                        description: 'American DJ, born in 1989.'
+                      - name: Alex Pall
+                        description: 'American DJ, songwriter, pianist and music producer, born in 1985.'
+                genres:
+                  - Dance
+                  - Electronic
+              sequence: 1
+              addedOn: '2020-05-31 05:42:41'
+    Track:
+      title: Track
+      type: object
+      description: The general information about a track
+      x-examples:
+        Something Just Like This:
+          trackID: 1
+          title: Something Just Like This
+          duration: '4:08'
+          audioPath: /music/something-just-like-this.mp3
+          albums:
+            - album:
+                albumID: 1
+                title: Something Just Like This
+                year: '2017'
+                type: single
+                imagePath: /images/something-just-like-this.png
+              track: 1
+          artists:
+            - name: The Chainsmokers
+              description: 'The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit "#SELFIE".'
+              imagePath: /images/the-chainsmokers.png
+              aliases:
+                - Chain Smokers
+              urls:
+                - 'http://www.thechainsmokers.com'
+              members:
+                - name: Andrew Taggart
+                  description: 'American DJ, born in 1989.'
+                - name: Alex Pall
+                  description: 'American DJ, songwriter, pianist and music producer, born in 1985.'
+          genres:
+            - Dance
+            - Electronic
+      properties:
+        trackID:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 4294967295
+          example: 4242
+          description: The ID of a track
+        title:
+          type: string
+          example: Something Just Like This
+          minLength: 1
+          maxLength: 128
+          description: The title of a track
+        duration:
+          type: string
+          minLength: 4
+          maxLength: 8
+          example: '4:08'
+          description: The duration of a track
+        audioPath:
+          type: string
+          minLength: 1
+          maxLength: 256
+          example: /music/something-just-like-this.mp3
+          description: The path to the mp3 file on the file server
+        albums:
+          type: array
+          description: The list of albums a track was released
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AlbumItem'
+        artists:
+          type: array
+          uniqueItems: true
+          description: The list of artists that participated in a track
+          items:
+            $ref: '#/components/schemas/Interpreter'
+        genres:
+          type: array
+          uniqueItems: true
+          description: A list of the genres of a track
+          items:
+            type: string
+            maxLength: 32
+            minLength: 1
+    Album:
+      title: Album
+      type: object
+      description: The general information about an album
+      properties:
+        albumID:
+          type: integer
+          format: int32
+          maximum: 4294967295
+          minimum: 1
+          example: 5757
+          description: The ID of an album
+        title:
+          type: string
+          example: Something Just Like This
+          minLength: 1
+          maxLength: 128
+          description: The title of an album
+        year:
+          type: string
+          minLength: 4
+          maxLength: 4
+          example: '2017'
+          description: the year when the album was released
+          pattern: "\\d{4}"
+        type:
+          type: string
+          enum:
+            - album
+            - single
+          example: single
+          description: 'The type of an album e.g. Album, Single, ...'
+        imagePath:
+          type: string
+          example: /images/something-just-like-this.png
+          minLength: 1
+          maxLength: 256
+          description: The path to the image of an album on the file server
+      x-examples:
+        Something Just Like This:
+          albumID: 1
+          title: Something Just Like This
+          year: '2017'
+          type: single
+          imagePath: /images/something-just-like-this.png
+    Artist:
+      title: Artist
+      type: object
+      description: The general information about an artist
+      x-examples:
+        The Chainsmokers:
+          name: The Chainsmokers
+          description: 'The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit "#SELFIE".'
+          imagePath: /images/the-chainsmokers.png
+          aliases:
+            - Chain Smokers
+          urls:
+            - 'http://www.thechainsmokers.com'
+          members:
+            - name: Andrew Taggart
+              description: 'American DJ, born in 1989.'
+            - name: Alex Pall
+              description: 'American DJ, songwriter, pianist and music producer, born in 1985.'
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: The Chainsmokers
+          description: The name of an artist
+        description:
+          type: string
+          example: "The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit \\\"#SELFIE\\\"."
+          minLength: 1
+          maxLength: 512
+          description: 'The description of the artist '
+        imagePath:
+          type: string
+          example: /images/the-chainsmokers.png
+          minLength: 1
+          maxLength: 256
+          description: The path to image of an artist on the file server
+        aliases:
+          type: array
+          uniqueItems: true
+          description: The name variations of an artist
+          items:
+            type: string
+            minLength: 1
+            maxLength: 64
+        urls:
+          type: array
+          uniqueItems: true
+          description: The social media links of an artist
+          items:
+            type: string
+            minLength: 1
+            maxLength: 256
+            format: uri
+        members:
+          type: array
+          uniqueItems: true
+          description: 'The members of an artist. If this field is null, the artist is a single person.'
+          items:
+            $ref: '#/components/schemas/Artist'
+    AlbumItem:
+      title: AlbumItem
+      type: object
+      description: 'The general information '
+      properties:
+        album:
+          $ref: '#/components/schemas/Album'
+        trackNumber:
+          type: integer
+          maximum: 255
+          minimum: 1
+          example: 1
+          description: The track number of a track in the album. This field represents the order of the tracks.
+      x-examples:
+        Something Just Like This:
+          album:
+            albumID: 1
+            title: Something Just Like This
+            year: '2017'
+            type: single
+            imagePath: /images/something-just-like-this.png
+          trackNumber: 1
+    Interpreter:
+      title: Interpreter
+      type: object
+      description: The general information about an interpreter
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+        connect:
+          type: string
+          enum:
+            - Ft.
+            - '&'
+          description: This field defines the role of an artist for a track. The role can either be a featuring or a collaboration between artists.
+      x-examples:
+        The Chainsmokers:
+          artist:
+            name: The Chainsmokers
+            description: 'The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit "#SELFIE".'
+            imagePath: /images/the-chainsmokers.png
+            aliases:
+              - Chain Smokers
+            urls:
+              - 'http://www.thechainsmokers.com'
+            members:
+              - name: Andrew Taggart
+                description: 'American DJ, born in 1989.'
+              - name: Alex Pall
+                description: 'American DJ, songwriter, pianist and music producer, born in 1985.'
+          connect: '&'
+    PlaylistItem:
+      title: PlaylistItem
+      type: object
+      description: The general information about a playlist item
+      x-examples:
+        Something Just Like This:
+          track:
+            trackID: 1
+            title: Something Just Like This
+            duration: '4:08'
+            filePath: /music/something-just-like-this.mp3
+            albums:
+              - album:
+                  albumID: 1
+                  title: Something Just Like This
+                  year: '2017'
+                  type: single
+                  imagePath: /images/something-just-like-this.png
+                track: 1
+            artists:
+              - name: The Chainsmokers
+                description: 'The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit "#SELFIE".'
+                imagePath: /images/the-chainsmokers.png
+                aliases:
+                  - Chain Smokers
+                urls:
+                  - 'http://www.thechainsmokers.com'
+                members:
+                  - name: Andrew Taggart
+                    description: 'American DJ, born in 1989.'
+                  - name: Alex Pall
+                    description: 'American DJ, songwriter, pianist and music producer, born in 1985.'
+            genres:
+              - Dance
+              - Electronic
+          sequence: 1
+          addedOn: '2020-05-31 05:42:41'
+      properties:
+        track:
+          $ref: '#/components/schemas/Track'
+        sequence:
+          type: integer
+          minimum: 1
+          maximum: 255
+          description: The sequence number of an item in the playlist. This field represents the order of the items.
+          example: 5
+        addedOn:
+          type: string
+          format: date-time
+          description: The timestamp an item was added to a playlist
+          example: '2020-05-30T15:30:00Z'
+          pattern: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+          minLength: 20
+          maxLength: 20
+    Error:
+      title: Error
+      type: object
+      description: The general information about an error in the API
+      properties:
+        code:
+          type: integer
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+          example: 404
+          description: The http error status code
+        message:
+          type: string
+          example: Not Found
+          description: The error message of the request
+        timestamp:
+          type: string
+          format: date-time
+          pattern: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+          minLength: 20
+          maxLength: 20
+          example: '2020-05-30T15:30:00Z'
+          description: The timestamp when the error occurred.
+    Indices:
+      type: array
+      title: Indices
+      description: An array of indices to make an operation on
+      uniqueItems: true
+      minItems: 1
+      maxItems: 60
+      items:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 4294967295
+        example: 1337
+    Image:
+      title: Image
+      type: object
+      description: The general information of an image
+      properties:
+        url:
+          type: string
+        height:
+          type: integer
+        width:
+          type: integer
   securitySchemes: {}

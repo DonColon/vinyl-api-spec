@@ -25,7 +25,7 @@ create table if not exists Song(
 	songID int auto_increment primary key,
     title varchar(128) not null,
     duration varchar(8) not null,
-    filePath varchar(256) not null
+    audioPath varchar(256) not null
 );
 
 create table if not exists Album(
