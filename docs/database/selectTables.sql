@@ -1,6 +1,6 @@
 select * from user;
 select * from playlist;
-select * from song;
+select * from track;
 select * from album;
 select * from artist;
 select * from genre;

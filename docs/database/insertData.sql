@@ -3,9 +3,16 @@ insert into User values(null, 'Hasan', 'Karadeniz', 'M', '1998-07-14', 'HKK', 'h
 
 insert into Playlist values(null, 'Winter Wonder', 'Chill in Front your Chimney', '/images/winter-wonder.png', 1, false, curdate());
 
-insert into Song values(null, 'Something Just Like This', '4:08', '/music/something-just-like-this.mp3');
+insert into Track values(null, 'Something Just Like This', '4:08', '/music/something-just-like-this.mp3');
+insert into Track values(null, 'Fix you', '4:56', '/music/fix-you.mp3');
+insert into Track values(null, 'Viva La Vida', '4:02', '/music/viva-la-vida.mp3');
+insert into Track values(null, 'Paradise', '4:39', '/music/paradise.mp3');
+insert into Track values(null, 'Every Teardrop is a Waterfall', '4:01', '/music/every-teardrop-is-a-waterfall.mp3');
 
-insert into Album values(null, 'Something Just Like This', '2017', 'Single', '/images/something-just-like-this.png');
+insert into Album values(null, 'Something Just Like This', '2017', 'single', '/images/something-just-like-this.png');
+insert into Album values(null, 'X&Y', '2005', 'album', '/images/x&y.png');
+insert into Album values(null, 'Viva La Vida or Death and All His Friends', '2008', 'album', '/images/viva-la-vida.png');
+insert into Album values(null, 'Mylo Xyloto', '2011', 'album', '/images/mylo-xyloto.png');
 
 insert into Artist values('The Chainsmokers', 'The Chainsmokers are a New York City based electro-house DJ/producer duo consisting of members Andrew Taggart (born 1989) and Alex Pall (born 1985). The duo rose to fame with their 2014 hit \"#SELFIE\".', '/images/the-chainsmokers.png');
 insert into Artist values('Andrew Taggart', 'American DJ, born in 1989.', null);
@@ -99,8 +106,13 @@ insert into Genre values("Rock 'n' Roll");
 insert into Genre values('Hard Rock');
 
 insert into PlaylistItem values(1, 1, 1, now());
+insert into PlaylistItem values(1, 2, 2, now());
 
 insert into AlbumItem values(1, 1, 1);
+insert into AlbumItem values(2, 2, 4);
+insert into AlbumItem values(3, 3, 7);
+insert into AlbumItem values(4, 4, 3);
+insert into AlbumItem values(4, 5, 7);
 
 insert into ArtistAlias values('The Chainsmokers', 'Chain Smokers');
 
@@ -108,6 +120,10 @@ insert into SocialMedia values('The Chainsmokers', 'http://www.thechainsmokers.c
 
 insert into Interpreter values(1, 'The Chainsmokers', '&');
 insert into Interpreter values(1, 'Coldplay', null);
+insert into Interpreter values(2, 'Coldplay', null);
+insert into Interpreter values(3, 'Coldplay', null);
+insert into Interpreter values(4, 'Coldplay', null);
+insert into Interpreter values(5, 'Coldplay', null);
 
 insert into Member values('The Chainsmokers', 'Andrew Taggart');
 insert into Member values('The Chainsmokers', 'Alex Pall');
@@ -119,9 +135,17 @@ insert into Member values('Coldplay', 'Phil Harvey');
 
 insert into Collaboration values(1, 'The Chainsmokers');
 insert into Collaboration values(1, 'Coldplay');
+insert into Collaboration values(2, 'Coldplay');
+insert into Collaboration values(3, 'Coldplay');
+insert into Collaboration values(4, 'Coldplay');
 
 insert into MusicStyle values(1, 'Dance');
 insert into MusicStyle values(1, 'Electronic');
+insert into MusicStyle values(2, 'Alternative Rock');
+insert into MusicStyle values(3, 'Pop');
+insert into MusicStyle values(3, 'Alternative Rock');
+insert into MusicStyle values(4, 'Alternative Rock');
+insert into MusicStyle values(5, 'Alternative Rock');
 
 insert into Subscription values(2, 1);
 

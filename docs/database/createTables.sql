@@ -2,7 +2,7 @@ create table if	not exists User(
 	userID int auto_increment primary key,
     firstname varchar(64) not null,
     familyname varchar(64) not null,
-    gender enum('D', 'M', 'W') not null,
+    gender enum('D', 'F', 'M') not null,
     birthday date not null,
     username varchar(64) unique not null,
     email varchar(64) unique not null,
@@ -17,12 +17,12 @@ create table if not exists Playlist(
     description varchar(256),
     imagePath varchar(256),
     owner int not null,
-    public boolean not null,
+    isPublic boolean not null,
     creationDate date not null
 );
 
-create table if not exists Song(
-	songID int auto_increment primary key,
+create table if not exists Track(
+	trackID int auto_increment primary key,
     title varchar(128) not null,
     duration varchar(8) not null,
     audioPath varchar(256) not null
@@ -32,7 +32,7 @@ create table if not exists Album(
 	albumID int auto_increment primary key,
     title varchar(128) not null,
     year char(4) not null,
-    type enum('album', 'single') not null,
+    type enum('album', 'ep', 'single') not null,
     imagePath varchar(256)
 );
 
@@ -49,19 +49,19 @@ create table if not exists Genre(
 
 create table if not exists PlaylistItem(
 	playlist int,
-    song int,
+    track int,
     sequence tinyint not null,
     addedOn timestamp not null,
-    primary key(playlist, song),
+    primary key(playlist, track),
     constraint validateSequence check(sequence > 0)
 );
 
 create table if not exists AlbumItem(
 	album int,
-    song int,
-    track tinyint not null,
-    primary key(album, song),
-    constraint validateTrack check(track > 0)
+    track int,
+    trackNumber tinyint not null,
+    primary key(album, track),
+    constraint validateTrack check(trackNumber > 0)
 );
 
 create table if not exists ArtistAlias(
@@ -77,10 +77,10 @@ create table if not exists SocialMedia(
 );
 
 create table if not exists Interpreter(
-	song int,
+	track int,
     interpreter varchar(64),
-    connect enum('&', 'Ft.'),
-    primary key(song, interpreter)
+    role enum('&', 'Ft.'),
+    primary key(track, interpreter)
 );
 
 create table if not exists Member(
@@ -97,9 +97,9 @@ create table if not exists Collaboration(
 );
 
 create table if not exists MusicStyle(
-	song int,
+	track int,
     genre varchar(32),
-    primary key(song, genre)
+    primary key(track, genre)
 );
 
 
@@ -111,8 +111,8 @@ create table if not exists Subscription(
 
 create table if not exists Favorite(
 	user int,
-    song int,
-    primary key(user, song)
+    track int,
+    primary key(user, track)
 );
 
 create table if not exists Friendship(
