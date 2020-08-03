@@ -657,6 +657,63 @@ paths:
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/sortBy'
         - $ref: '#/components/parameters/sortOrder'
+    put:
+      summary: Subscribe a Playlist
+      tags:
+        - Playlists
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: put-subscribers-userID-playlists
+      description: Subscribe the specified user to one or multiple playlists
+      parameters:
+        - $ref: '#/components/parameters/indices'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Indices'
+    delete:
+      summary: Unsubscribe a Playlist
+      tags:
+        - Playlists
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: delete-subscribers-userID-playlists
+      description: Unsubscribe the specified user from one or multiple playlists
+      parameters:
+        - $ref: '#/components/parameters/indices'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Indices'
+        description: ''
   '/playlists/{playlistID}/images':
     parameters:
       - schema:
@@ -725,59 +782,6 @@ paths:
           name: Content-Type
           description: 'The content type of the request body: image/jpeg, image/png'
           required: true
-  '/playlists/{playlistID}/subscribers':
-    parameters:
-      - schema:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 4294967295
-          example: 1337
-        name: playlistID
-        in: path
-        required: true
-    put:
-      summary: Subscribe a Playlist
-      tags:
-        - Playlists
-      responses:
-        '201':
-          description: Created
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      operationId: put-playlists-playlistID-subscribers
-      description: Subscribe the current user to a playlist
-    delete:
-      summary: Unsubscribe a Playlist
-      tags:
-        - Playlists
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      operationId: delete-playlists-playlistID-subscribers
-      description: Unsubscribe the current user from a playlist
   '/tracks/{trackID}':
     parameters:
       - schema:
