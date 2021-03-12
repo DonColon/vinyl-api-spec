@@ -591,8 +591,6 @@ paths:
                 to:
                   type: integer
                   format: int32
-                  minimum: 1
-                  maximum: 255
                   example: 8
         description: ''
       responses:
@@ -1693,12 +1691,19 @@ components:
       title: Album
       type: object
       description: The general information about an album
+      x-examples:
+        Something Just Like This:
+          albumID: 1
+          title: Something Just Like This
+          year: '2017'
+          type: single
+          imagePath: /images/something-just-like-this.png
       properties:
         albumID:
-          type: integer
+          type:
+            - integer
+            - boolean
           format: int32
-          maximum: 4294967295
-          minimum: 1
           example: 5757
           description: The ID of an album
         title:
@@ -1727,13 +1732,6 @@ components:
           minLength: 1
           maxLength: 256
           description: The path to the image of an album on the file server
-      x-examples:
-        Something Just Like This:
-          albumID: 1
-          title: Something Just Like This
-          year: '2017'
-          type: single
-          imagePath: /images/something-just-like-this.png
     Artist:
       title: Artist
       type: object
